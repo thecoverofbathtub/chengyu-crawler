@@ -3,16 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "pinyin": "^2.7.4",
+    "q": "^1.4.1",
+    "superagent": "^2.1.0",
+    "superagent-charset": "^1.1.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "me@gaoyang.me",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thecoverofbathtub/chengyu-crawler.git"
+  },
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "cheerio": "^0.20.0",
-    "express": "^4.13.4",
-    "pinyin": "^2.7.1",
-    "sprintf-js": "^1.0.3",
-    "superagent": "^1.8.3"
-  }
+  "bugs": {
+    "url": "https://github.com/thecoverofbathtub/chengyu-crawler/issues"
+  },
+  "homepage": "https://github.com/thecoverofbathtub/chengyu-crawler#readme"
 }
