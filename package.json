@@ -1,0 +1,18 @@
+{
+  "name": "chengyu-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "me@gaoyang.me",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "express": "^4.13.4",
+    "pinyin": "^2.7.1",
+    "sprintf-js": "^1.0.3",
+    "superagent": "^1.8.3"
+  }
+}
