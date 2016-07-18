@@ -7,7 +7,7 @@ let request = require('request');
 
 const sourceUrlTemplate = 'http://chengyu.t086.com/list/${firstChar}_${index}.html';
 const concurrencyLimit = 50;
-const dumpPath = 'chengyu.dump'
+const dumpPath = './chengyu.dump';
 
 function getChengyuFromPage(pageHtml) {
     let chengyus = [];

@@ -1,9 +1,11 @@
 let ChengyuFetcher = require('./chengyu-fetcher');
 let ChengyuSerializer = require('./chengyu-serializer');
 
-ChengyuFetcher.run(true)
+const dumpPath = './chengyu.pinyin.dump';
+
+ChengyuFetcher.run(false)
     .then(chengyus => {
-        ChengyuSerializer.serialize(chengyus);
+        ChengyuSerializer.serialize(dumpPath, chengyus);
     })
     .catch(err => {
         console.error(err);

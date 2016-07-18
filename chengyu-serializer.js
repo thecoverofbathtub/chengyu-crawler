@@ -1,8 +1,6 @@
 let fs = require('fs');
 let pinyin = require('pinyin');
 
-const dumpPath = './chengyu.pinyin.dump';
-
 function toPinyin(text) {
     return pinyin(text, {
         style: pinyin.STYLE_TONE2,
@@ -14,14 +12,12 @@ function toHanziPinyin(text) {
     return text + '    ' + toPinyin(text);
 }
 
-function dump(chengyus) {
+exports.serialize = function(filePath, chengyus) {
     chengyus.sort((a, b) => {
         let pinyinA = toPinyin(a);
         let pinyinB = toPinyin(b);
         return pinyinA.localeCompare(pinyinB);
     });
-    fs.writeFileSync(dumpPath, chengyus.map(toHanziPinyin).join('\n'));
-    console.log('Cheng-yu saved successfully');
-}
-
-exports.serialize = dump;
+    fs.writeFileSync(filePath, chengyus.map(toHanziPinyin).join('\n'));
+    console.log('Cheng-yu saved successfully with pinyin');
+};
