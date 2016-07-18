@@ -1,7 +1,7 @@
 let ChengyuFetcher = require('./chengyu-fetcher');
 let ChengyuSerializer = require('./chengyu-serializer');
 
-ChengyuFetcher.run(false)
+ChengyuFetcher.run(true)
     .then(chengyus => {
         ChengyuSerializer.serialize(chengyus);
     })

@@ -5,10 +5,10 @@
   "main": "app.js",
   "dependencies": {
     "cheerio": "^0.20.0",
+    "iconv-lite": "^0.4.13",
     "pinyin": "^2.7.4",
     "q": "^1.4.1",
-    "superagent": "^2.1.0",
-    "superagent-charset": "^1.1.1"
+    "request": "^2.73.0"
   },
   "devDependencies": {},
   "scripts": {

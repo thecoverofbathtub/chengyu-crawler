@@ -1,11 +1,9 @@
 let Q = require('q');
 let async = require('async');
-let charset = require('superagent-charset');
-let superagent = require('superagent');
 let cheerio = require('cheerio');
 let fs = require('fs');
-
-charset(superagent);
+let iconv = require('iconv-lite');
+let request = require('request');
 
 const sourceUrlTemplate = 'http://chengyu.t086.com/list/${firstChar}_${index}.html';
 const concurrencyLimit = 50;
@@ -22,28 +20,33 @@ function getChengyuFromPage(pageHtml) {
 
 function getChengyuFromUrl(urlGen) {
     let deferred = Q.defer();
-    superagent.get(urlGen.next())
-        .charset('gbk')
-        .end((err, response) => {
-            if (err) {
-                deferred.reject("Failed at: " + urlGen.curr());
-                return;
-            }
-            let chengyus = getChengyuFromPage(response.text);
-            chengyus.urlGen = urlGen;
-            deferred.resolve(chengyus);
-        });
+    let siteUrl = urlGen.next();
+    request({
+        url: siteUrl,
+        encoding: null
+    }, (err, response, body) => {
+        if (err || response.statusCode !== 200) {
+            deferred.reject('Failed at: ' + siteUrl);
+            return;
+        }
+        let chengyus = getChengyuFromPage(iconv.decode(body, 'gbk').toString('binary'));
+        chengyus.urlGen = urlGen;
+        chengyus.siteUrl = siteUrl;
+        deferred.resolve(chengyus);
+    });
     return deferred.promise;
 }
 
 let UrlGen = function(template) {
     let index = 1;
     return {
-        curr: () => {
+        peek: function() {
             return template.replace('${index}', index);
         },
-        next: () => {
-            return template.replace('${index}', index++);
+        next: function() {
+            let ret = this.peek();
+            index++;
+            return ret;
         }
     };
 };
@@ -100,7 +103,7 @@ ChengyuFetcher.prototype.collectChengyusFromAsyncResult = function(err, result) 
         console.error(err);
         return;
     }
-    console.log('Fetched cheng-yu successfully from ' + result.urlGen.curr());
+    console.log('Fetched cheng-yu successfully from ' + result.siteUrl);
     result.forEach(chengyu => this.chengyus.push(chengyu));
     this.jobs.push(result.urlGen, this.collectChengyusFromAsyncResult.bind(this));
 };
